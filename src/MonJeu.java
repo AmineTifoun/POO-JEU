@@ -122,38 +122,38 @@ public class MonJeu implements IJeuDesBilles {
         int cpt = 1 ;
         if ( sense){/* alignement horizontal */
             for( int i = x ; i< this.nblignes-1 ; i+= 1){
-                if( this.Terrain[i][y] == this.Terrain[i+1][y]){
+                if( this.Terrain[x][y] == this.Terrain[i+1][y]){
                     cpt++ ;
                 }
             }
             for(  int i = x ; i>0 ; i+= -1){
-                if( this.Terrain[i][y] == this.Terrain[i-1][y]){
+                if( this.Terrain[x][y] == this.Terrain[i-1][y]){
                     cpt++ ;
                 }
             
         }   
     }
     else{/* alignement vertical */
-        for( int i = x ; i< this.nbColonnes-1 ; i+= 1){
-            if( this.Terrain[x][i] == this.Terrain[x][i+1]){
+        for( int i = y ; i< this.nbColonnes-1 ; i+= 1){
+            if( this.Terrain[x][y] == this.Terrain[x][i+1]){
                 cpt++ ;
             }
         }
-        for(  int i = x ; i>0 ; i+= -1){
-            if( this.Terrain[x][i] == this.Terrain[x][i-1]){
+        for(  int i = y ; i>0 ; i+= -1){
+            if( this.Terrain[x][y] == this.Terrain[x][i-1]){
                 cpt++ ;
             }
         }
     }
-        return cpt-1 ;
+        return cpt ;
     }
 
 
     public void ajouterScore( int couleur , int x , int y){
-        if ( aligne( couleur , x , y , true ) == 5){/* Alignement horizontal */
+        if ( aligne( couleur , x , y , true )  == 5){/* Alignement horizontal */
             this.score++ ;
         }
-        if( aligne( couleur , x , y , false ) == 5){
+        if( aligne( couleur , x , y , false )  == 5){
             this.score++ ;/* aligement vertical */
         }
     }
