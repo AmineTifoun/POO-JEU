@@ -178,7 +178,7 @@ public class MonJeu implements IJeuDesBilles {
         }
         if( y != 0 && this.Terrain[x][y-1]== VIDE){
             array.add( new Point(x , y-1));
-        }
+        } 
         return array ;
     }
 
