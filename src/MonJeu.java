@@ -3,6 +3,7 @@ import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random ;
+import java.util.Iterator;
 
 public class MonJeu implements IJeuDesBilles {
     public static final int VIDE = -1 ;
@@ -83,15 +84,17 @@ public class MonJeu implements IJeuDesBilles {
         if(this.Terrain[var3][var4] != VIDE){
             return used;
         }
+        List<Point> list = new ArrayList<Point>();
+        if( this.cheminPossible(var1, var2, var3, var4 , list)){
         this.Terrain[var3][var4] = this.Terrain[var1][var2];
         this.Terrain[var1][var2] = VIDE;
-
         this.ajouterScore(this.Terrain[var3][var4] , var3 , var4);
         Point d = new Point( var1 , var2);
         used.add(d);
         d.setLocation(var3, var4);
         used.add(d);
         jouerBilles();
+        }
         return used ;
     } 
 
@@ -157,9 +160,52 @@ public class MonJeu implements IJeuDesBilles {
             this.score++ ;/* aligement vertical */
         }
     }
+
+    public List<Point> deplassable(int x , int y){
+        System.out.println("DANS ARRAY LIST ... ");
+        List<Point> array = new ArrayList<Point>() ;
+        if( x != 0 && this.Terrain[x-1][y]== VIDE){
+            array.add( new Point(x-1 , y));
+        }
+        if( y != this.nbColonnes-1 && this.Terrain[x][y+1]== VIDE){
+            array.add( new Point(x , y+1));
+        }
+        if( x != this.nblignes-1 && this.Terrain[x+1][y]== VIDE){
+            array.add( new Point(x+1 , y));
+        }
+        if( y != 0 && this.Terrain[x][y-1]== VIDE){
+            array.add( new Point(x , y-1));
+        }
+        return array ;
+    }
+
+    public boolean cheminPossible(int x, int y, int x1, int y1 , List<Point> liste) {
+        System.out.println(x);
+        System.out.println(y);
+        System.out.println(x1);
+        System.out.println(y1);
+        liste.add(new Point(x,y));
+        if (x == x1 && y == y1) {
+            System.out.println("JE SUIS LAA");
+            System.out.println(x1);
+            System.out.println(y1);
+            return true;
+        }
+        List<Point> points = this.deplassable(x, y);
+        System.out.println("les poinst:"+points);
+        if (!points.isEmpty()) {
+            for (Point point : points) {
+                if( !liste.contains(point)){
+                if (cheminPossible(point.x, point.y, x1, y1 , liste)) {
+                    System.out.println(point);
+                    return true;
+                }
+            }
+            }
+        }
+        return false;
     }
     
-
-    
+}
 
    
